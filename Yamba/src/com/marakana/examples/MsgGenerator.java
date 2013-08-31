@@ -13,6 +13,7 @@ public class MsgGenerator implements Runnable {
 	public void run() {
 		Random rand = new Random();
 		int r = 0;
+		ArrayList<MsgInterface> localList = new ArrayList<MsgInterface>();
 
 		while((r = rand.nextInt(20)) < 18) {
 			MsgInterface msg = null;
@@ -28,17 +29,23 @@ public class MsgGenerator implements Runnable {
 
 			msg.setMsg("Num is: "+r);
 
-			list.add(msg);
+			localList.add(msg);
 		}
 
 		synchronized(this) {
+			list = localList;
 			this.notifyAll();
 		}
 	}
 
 	public void printList() {
+		ArrayList<MsgInterface> localList;
+		synchronized (this) {
+		    localList = list;
+		}
+
 		System.out.println("List Contents:");
-		for(MsgInterface msg : list) {
+		for(MsgInterface msg : localList) {
 			System.out.println("  "+msg.getMsgType()+" msg = "+msg.getMsg());
 			if(msg.getMsgType().equals("MsgTypeImplementationExtended")) {
 				System.out.println(" *** Overloaded getMsg : "+ 

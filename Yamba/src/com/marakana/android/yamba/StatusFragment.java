@@ -20,7 +20,7 @@ import com.marakana.android.yamba.clientlib.YambaClient;
 import com.marakana.android.yamba.clientlib.YambaClientException;
 
 public class StatusFragment extends Fragment implements OnClickListener {
-	private static final String TAG = "StatusActivity";
+	private static final String TAG = "StatusFragment";
 	private EditText editStatus;
 	private Button buttonTweet;
 	private TextView textCount;
